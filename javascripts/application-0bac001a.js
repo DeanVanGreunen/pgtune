@@ -12153,7 +12153,7 @@ var hljs=new function(){function k(v){return v.replace(/&/gm,"&amp;").replace(/<
 
   Pgtune = (function() {
     function Pgtune(form, codeOut, oldPgkernel) {
-      var e, error;
+      var e;
       this.form = form;
       this.codeOut = codeOut;
       this.oldPgkernel = oldPgkernel;
