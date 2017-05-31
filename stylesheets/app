@@ -84,6 +84,8 @@ Backtrace:
 /Users/leo/.rvm/gems/ruby-2.4.1/gems/rack-2.0.3/lib/rack/urlmap.rb:68:in `block in call'
 /Users/leo/.rvm/gems/ruby-2.4.1/gems/rack-2.0.3/lib/rack/urlmap.rb:53:in `each'
 /Users/leo/.rvm/gems/ruby-2.4.1/gems/rack-2.0.3/lib/rack/urlmap.rb:53:in `call'
+/Users/leo/.rvm/gems/ruby-2.4.1/gems/middleman-core-4.2.1/lib/middleman-core/extensions/minify_javascript.rb:55:in `call'
+/Users/leo/.rvm/gems/ruby-2.4.1/gems/middleman-core-4.2.1/lib/middleman-core/extensions/minify_css.rb:63:in `call'
 /Users/leo/.rvm/gems/ruby-2.4.1/gems/htmlcompressor-0.2.0/lib/htmlcompressor/rack.rb:36:in `call'
 /Users/leo/.rvm/gems/ruby-2.4.1/gems/middleman-autoprefixer-2.8.0/lib/middleman-autoprefixer/extension.rb:48:in `call'
 /Users/leo/.rvm/gems/ruby-2.4.1/gems/middleman-core-4.2.1/lib/middleman-core/core_extensions/inline_url_rewriter.rb:74:in `call'
