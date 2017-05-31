@@ -12316,7 +12316,7 @@ var hljs=new function(){function k(v){return v.replace(/&/gm,"&amp;").replace(/<
     };
 
     Pgtune.prototype._postgresSettings = function() {
-      var arrayConfig, gConfig, infoMsg, key, memoryInKB, ref, value, workMem;
+      var arrayConfig, gConfig, infoMsg, key, memoryInKB, ref, settingsInfo, value, workMem;
       gConfig = {
         max_connections: this.conByType[this.dbType]
       };
@@ -12328,6 +12328,12 @@ var hljs=new function(){function k(v){return v.replace(/&/gm,"&amp;").replace(/<
       }
       memoryInKB = this.totalMemory / this.constSize['KB'];
       infoMsg = "";
+      settingsInfo = [["DB Version", this.dbVersion], ["OS Type", this.osType], ["DB Type", this.dbType], ["Total Memory (RAM)", ($('#pgtTotalMemValue').val()) + " " + ($('#pgtTotalMemMeasValue').val())], ["Number of Connections", gConfig['max_connections']]];
+      settingsInfo = settingsInfo.map((function(_this) {
+        return function(setting) {
+          return "# " + setting[0] + ": " + setting[1];
+        };
+      })(this));
       if (this.totalMemory >= (256 * this.constSize['MB'])) {
         gConfig['shared_buffers'] = {
           web: Math.floor(memoryInKB / 4),
@@ -12365,10 +12371,10 @@ var hljs=new function(){function k(v){return v.replace(/&/gm,"&amp;").replace(/<
           gConfig['maintenance_work_mem'] = Math.floor(2 * this.constSize['GB'] / this.constSize['KB']);
         }
         if (this.totalMemory >= (100 * this.constSize['GB'])) {
-          infoMsg = "# WARNING\n# this tool not being optimal \n# for very high memory systems\n\n";
+          infoMsg = "# WARNING\n# this tool not being optimal \n# for very high memory systems\n";
         }
       } else {
-        infoMsg = "# WARNING\n# this tool not being optimal \n# for low memory systems\n\n";
+        infoMsg = "# WARNING\n# this tool not being optimal \n# for low memory systems\n";
       }
       if (this.dbVersion < 9.5) {
         gConfig['checkpoint_segments'] = {
@@ -12426,7 +12432,7 @@ var hljs=new function(){function k(v){return v.replace(/&/gm,"&amp;").replace(/<
         }
         return results;
       }).call(this);
-      return this.codeOut.text("" + infoMsg + (arrayConfig.join("\n")));
+      return this.codeOut.text("" + infoMsg + (settingsInfo.join("\n")) + "\n\n" + (arrayConfig.join("\n")));
     };
 
     Pgtune.prototype._kernelSettings = function() {
