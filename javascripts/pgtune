@@ -3,10 +3,11 @@
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Pgtune = (function() {
-    function Pgtune(form, codeOut, oldPgkernel) {
+    function Pgtune(form, codeOut, alterSystemOut, oldPgkernel) {
       var e;
       this.form = form;
       this.codeOut = codeOut;
+      this.alterSystemOut = alterSystemOut;
       this.oldPgkernel = oldPgkernel;
       this._appCacheUpdated = bind(this._appCacheUpdated, this);
       this._initAppcache = bind(this._initAppcache, this);
@@ -205,7 +206,18 @@
         }
         return results;
       }).call(this);
-      return this.codeOut.text("" + infoMsg + (settingsInfo.join("\n")) + "\n\n" + (arrayConfig.join("\n")));
+      this.codeOut.text("" + infoMsg + (settingsInfo.join("\n")) + "\n\n" + (arrayConfig.join("\n")));
+      if (this.dbVersion >= 9.4) {
+        this.alterSystemOut.text("" + (arrayConfig.map((function(_this) {
+          return function(conf) {
+            return "ALTER SYSTEM SET\n  " + conf + ";";
+          };
+        })(this)).join("\n")));
+        return $('.settings-alter-system-block').show();
+      } else {
+        this.alterSystemOut.text('');
+        return $('.settings-alter-system-block').hide();
+      }
     };
 
     Pgtune.prototype._kernelSettings = function() {
@@ -271,9 +283,7 @@
   })();
 
   $(function() {
-    if ($('#pgTuneForm').length && $('#postgresConfigOut').length && $('#postgresOldkernelOut').length) {
-      return new Pgtune($('#pgTuneForm'), $('#postgresConfigOut'), $('#postgresOldkernelOut'));
-    }
+    return new Pgtune($('#pgTuneForm'), $('#postgresConfigOut'), $('#postgresAlterSystemOut'), $('#postgresOldkernelOut'));
   });
 
 }).call(this);
