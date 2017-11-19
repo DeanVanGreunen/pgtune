@@ -208,9 +208,9 @@
       }).call(this);
       this.codeOut.text("" + infoMsg + (settingsInfo.join("\n")) + "\n\n" + (arrayConfig.join("\n")));
       if (this.dbVersion >= 9.4) {
-        this.alterSystemOut.text("" + (arrayConfig.map((function(_this) {
-          return function(conf) {
-            return "ALTER SYSTEM SET\n  " + conf + ";";
+        this.alterSystemOut.text("" + (Object.keys(gConfig).map((function(_this) {
+          return function(confKey) {
+            return "ALTER SYSTEM SET\n " + confKey + " = '" + (_this._formatedValue(confKey, gConfig[confKey])) + "';";
           };
         })(this)).join("\n")));
         return $('.settings-alter-system-block').show();
