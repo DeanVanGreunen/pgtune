@@ -197,6 +197,10 @@
         desktop: 100,
         mixed: 100
       }[this.dbType];
+      gConfig['random_page_cost'] = {
+        ssd: '1.1',
+        hdd: '4'
+      }[$('#pgtHarddriveValue').val()];
       arrayConfig = (function() {
         var results;
         results = [];
