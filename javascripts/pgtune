@@ -170,7 +170,7 @@
           web: 2048 * this.constSize['MB'] / this.constSize['KB'],
           oltp: 4096 * this.constSize['MB'] / this.constSize['KB'],
           dw: 8192 * this.constSize['MB'] / this.constSize['KB'],
-          desktop: 100 * this.constSize['MB'] / this.constSize['KB'],
+          desktop: 1024 * this.constSize['MB'] / this.constSize['KB'],
           mixed: 2048 * this.constSize['MB'] / this.constSize['KB']
         }[this.dbType];
       }
