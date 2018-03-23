@@ -205,7 +205,7 @@
       if (this.dbVersion >= 9.5) {
         cpuNum = parseInt($('#pgtCPUValue').val(), 10) || 1;
         if (cpuNum > 1) {
-          parallelForWorkMem = cpuNum;
+          parallelForWorkMem = Math.ceil(cpuNum / 2);
           gConfig['max_worker_processes'] = cpuNum;
           if (this.dbVersion >= 9.6) {
             gConfig['max_parallel_workers_per_gather'] = Math.ceil(cpuNum / 2);
@@ -215,7 +215,7 @@
           }
         }
       }
-      workMem = (memoryInKB - gConfig['shared_buffers']) / (gConfig['max_connections'] * 3 * parallelForWorkMem) / 2;
+      workMem = (memoryInKB - gConfig['shared_buffers']) / (gConfig['max_connections'] * 3) / parallelForWorkMem / 2;
       gConfig['work_mem'] = {
         web: Math.floor(workMem),
         oltp: Math.floor(workMem),
